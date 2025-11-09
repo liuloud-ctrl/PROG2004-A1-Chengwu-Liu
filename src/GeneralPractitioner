@@ -1,0 +1,29 @@
+public class GeneralPractitioner extends HealthProfessional {
+    private int dailyPatientLimit;
+
+    public GeneralPractitioner() {
+        super();
+        this.dailyPatientLimit = 20;
+    }
+
+    public GeneralPractitioner(int id, String name, String department, int dailyPatientLimit) {
+        super(id, name, department);
+        this.dailyPatientLimit = dailyPatientLimit;
+    }
+
+    @Override
+    public void printDetails() {
+        System.out.println("=== Health Professional Type: General Practitioner ===");
+        super.printDetails();
+        System.out.println("Daily Patient Limit: " + this.dailyPatientLimit);
+        System.out.println("-----------------------------------------------------");
+    }
+
+    public int getDailyPatientLimit() {
+        return dailyPatientLimit;
+    }
+
+    public void setDailyPatientLimit(int dailyPatientLimit) {
+        this.dailyPatientLimit = dailyPatientLimit;
+    }
+}
