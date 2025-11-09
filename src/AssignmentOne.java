@@ -1,0 +1,112 @@
+import java.util.ArrayList;
+
+public class AssignmentOne {
+    public static void main(String[] args) {
+        // Part 3 – Using classes and objects
+        GeneralPractitioner gp1 = new GeneralPractitioner(
+                101, "Dr. Emily Clark", "Family Medicine", 18
+        );
+        GeneralPractitioner gp2 = new GeneralPractitioner(
+                102, "Dr. Michael Wong", "Family Medicine", 22
+        );
+        GeneralPractitioner gp3 = new GeneralPractitioner(
+                103, "Dr. Sarah Johnson", "Family Medicine", 20
+        );
+
+        // 创建2个心脏病专家对象
+        Cardiologist cardio1 = new Cardiologist(
+                201, "Dr. David Miller", "Cardiology", "ECG + Stress Test Machine"
+        );
+        Cardiologist cardio2 = new Cardiologist(
+                202, "Dr. Lisa Garcia", "Cardiology", "ECG + Echocardiogram"
+        );
+
+        gp1.printDetails();
+        gp2.printDetails();
+        gp3.printDetails();
+        cardio1.printDetails();
+        cardio2.printDetails();
+
+        System.out.println("------------------------------");
+
+        // Part 5 – Collection of appointments
+        ArrayList<Appointment> appointmentList = new ArrayList<>();
+
+        createAppointment(
+                appointmentList,
+                "John Smith", "1234567890", "08:30 AM",
+                gp1
+        );
+        createAppointment(
+                appointmentList,
+                "Emma Davis", "0987654321", "11:00 AM",
+                gp2
+        );
+        createAppointment(
+                appointmentList,
+                "Robert Brown", "1122334455", "02:15 PM",
+                cardio1
+        );
+        createAppointment(
+                appointmentList,
+                "Olivia Wilson", "5544332211", "04:00 PM",
+                cardio2
+        );
+
+        System.out.println("\n--- All Appointments After Creation ---");
+        printExistingAppointments(appointmentList);
+
+        System.out.println("\n--- Cancelling Appointment for Mobile: 1234567890 ---");
+        cancelBooking(appointmentList, "1234567890");
+
+        System.out.println("\n--- All Appointments After Cancellation ---");
+        printExistingAppointments(appointmentList);
+
+        System.out.println("\n------------------------------");
+    }
+
+    public static void createAppointment(
+            ArrayList<Appointment> list,
+            String patientName,
+            String patientMobile,
+            String timeSlot,
+            HealthProfessional doctor
+    ) {
+        if (patientName == null || patientName.isEmpty() ||
+                patientMobile == null || patientMobile.isEmpty() ||
+                timeSlot == null || timeSlot.isEmpty() ||
+                doctor == null) {
+            System.out.println("Error: Incomplete appointment information!");
+            return;
+        }
+        list.add(new Appointment(patientName, patientMobile, timeSlot, doctor));
+        System.out.println("Appointment created for " + patientName + "!");
+    }
+
+    public static void printExistingAppointments(ArrayList<Appointment> list) {
+        if (list.isEmpty()) {
+            System.out.println("No appointments found.");
+            return;
+        }
+        for (Appointment appt : list) {
+            appt.printAppointmentDetails();
+        }
+    }
+
+    public static void cancelBooking(ArrayList<Appointment> list, String patientMobile) {
+        boolean removed = false;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getPatientMobile().equals(patientMobile)) {
+                list.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if (removed) {
+            System.out.println("Booking cancelled successfully.");
+        } else {
+            System.out.println("Error: No booking found for mobile " + patientMobile);
+        }
+    }
+}
+
